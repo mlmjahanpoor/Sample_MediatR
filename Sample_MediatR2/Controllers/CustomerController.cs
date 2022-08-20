@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sample_MediatR2.Dtos;
 using Sample_MediatR2.Services.Commands;
+using Sample_MediatR2.Services.Queries;
 
 namespace Sample_MediatR2.Controllers;
 
@@ -14,6 +15,13 @@ public class CustomerController : ControllerBase
     public CustomerController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        var result = _mediator.Send(new GetCustomerQuery() { CustomerId = 1 });
+        return Ok(result.Result);
     }
 
     [HttpPost]
